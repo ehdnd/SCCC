@@ -14,3 +14,22 @@
 #         break
 
 # print(arr[c % len(arr) + 1])
+
+# 시간초과2
+# import sys
+
+# input = lambda: sys.stdin.readline().rstrip()
+# a, b, c = map(int, input().split())
+
+# res = a
+# for _ in range(b):
+#     res *= a
+#     res %= c
+# print(res)
+
+
+import sys
+
+input = lambda: sys.stdin.readline().rstrip()
+
+a, b, c = map(int, input().split())
