@@ -1,3 +1,14 @@
+# 모듈러 연산의 성질
+import sys
+
+input = lambda: sys.stdin.readline().rstrip()
+A, B, C = map(int, input())
+
+
+def jud(A, B, C):
+    pass
+
+
 # 시간초과
 # import sys
 
@@ -26,10 +37,3 @@
 #     res *= a
 #     res %= c
 # print(res)
-
-
-import sys
-
-input = lambda: sys.stdin.readline().rstrip()
-
-a, b, c = map(int, input().split())
