@@ -8,15 +8,9 @@ for i in range(N):
 
 ropes.sort(reverse=True)
 
-max = 0
-for i in range(N - 1):
-    max_1 = ropes[i] * (i + 1)
-    max_2 = ropes[i + 1] * (i + 1 + 1)
-    if max_1 > max_2:
-        max = max_1
-        break
+res = []
+for i in range(N):
+    w_max = ropes[i] * (i + 1)
+    res.append(w_max)
 
-if max == 0:
-    max = ropes[-1] * N
-
-print(max)
+print(max(res))
