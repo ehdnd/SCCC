@@ -2,11 +2,19 @@
 import sys
 
 input = lambda: sys.stdin.readline().rstrip()
-A, B, C = map(int, input())
+A, B, C = map(int, input().split())
 
 
 def jud(A, B, C):
-    pass
+    if B == 1:
+        return A % C
+    elif B % 2 == 0:
+        return (jud(A, B // 2, C) ** 2) % C
+    else:
+        return (jud(A, B // 2, C) ** 2) * A % C
+
+
+print(jud(A, B, C))
 
 
 # 시간초과
