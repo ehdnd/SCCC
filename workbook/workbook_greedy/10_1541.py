@@ -3,33 +3,15 @@ import sys
 input = lambda: sys.stdin.readline().rstrip()
 arr = input()
 
-isMinus = False
-res = 0
-temp = []
+minus_split_list = arr.split("-")
 
-for char in arr:
+res = []
+for x in minus_split_list:
+    temp = list(map(int, x.split("+")))
+    res.append(sum(temp))
 
-    if char.isdigit():
-        temp.append(char)
-    else:
-        temp = "".join(temp)
-        num = int(temp)
-        temp = []
+num = res[0]
+for i in range(1, len(res)):
+    num -= res[i]
 
-        if isMinus:
-            res -= num
-        else:
-            res += num
-
-    if char == "-":
-        isMinus = True
-
-temp = "".join(temp)
-num = int(temp)
-temp = []
-if isMinus:
-    res -= num
-else:
-    res += num
-
-print(res)
+print(num)
