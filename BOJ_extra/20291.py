@@ -1,15 +1,17 @@
 import sys
-from bisect import bisect_left, bisect_right
 
 input = lambda: sys.stdin.readline().rstrip()
 N = int(input())
 
-arr = []
+dic = {}
 for i in range(N):
-    arr.append(input().split(".")[1])
+    extension = input().split(".")[1]
+    if not extension in dic:
+        dic[extension] = 1
+    else:
+        dic[extension] += 1
 
-arr.sort()
-vs = sorted(list(set(arr)))
+sorted_dic = dict(sorted(dic.items()))
 
-for x in vs:
-    print(x, bisect_right(arr, x) - bisect_left(arr, x))
+for key, value in sorted_dic.items():
+    print(key, value)
