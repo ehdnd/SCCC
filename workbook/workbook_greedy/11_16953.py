@@ -7,14 +7,14 @@ cnt = 1
 while 1:
     if A >= B:
         break
-
-    if B % 2 == 0:
+    elif str(B).endswith("1"):
+        B = int(str(B)[:-1])
+    elif B % 2 == 0:
         B = B // 2
     else:
-        if B < 10:
-            break
-        B = int(str(B)[:-1])
+        break
     cnt += 1
+
 
 if A == B:
     print(cnt)
