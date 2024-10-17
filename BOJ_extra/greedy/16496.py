@@ -7,7 +7,8 @@ arr = []
 for i in range(N):
     num = nums[i]
     length = len(num)
-    num = num + num[-1] * (10 - length)
+    num = num * 10
+    num = num[:10]
     arr.append([int(num), 10 - length])
 
 arr.sort(reverse=True, key=lambda x: (x[0], x[1]))
