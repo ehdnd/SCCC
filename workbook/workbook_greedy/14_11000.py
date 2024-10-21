@@ -1,30 +1,19 @@
 import sys
+import heapq
 
 input = lambda: sys.stdin.readline().rstrip()
 N = int(input())
-cases = []
+rooms = []
 for _ in range(N):
-    cases.append(list(map(int, input().split())))
+    rooms.append(list(map(int, input().split())))
 
-cases.sort(key=lambda x: (x[0], x[1]))
+rooms.sort(key=lambda x: (x[0], x[1]))
 
-cnt = 0
-temp = cases
-while 1:
-    if temp == []:
-        break
+heap = [rooms[0][1]]
+for i in range(1, N):
+    room = rooms[i]
+    if room[0] >= heap[0]:
+        heapq.heappop(heap)
+    heapq.heappush(heap, room[1])
 
-    cases = temp
-    temp = []
-    res = []
-    for case in cases:
-        if len(res) > 0:
-            if res[-1][1] <= case[0]:
-                res.append(case)
-            else:
-                temp.append(case)
-        else:
-            res.append(case)
-    cnt += 1
-
-print(cnt)
+print(len(heap))
