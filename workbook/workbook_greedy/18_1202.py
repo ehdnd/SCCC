@@ -7,19 +7,28 @@ N, M = map(int, input().split())
 gems = []
 for _ in range(N):
     m, v = map(int, input().split())
-    heapq.heappush(gems, (-(v / m), m, v))
+    heapq.heappush(gems, (m, v))
 
 bags = []
 for _ in range(M):
-    heapq.heappush(bags, -int(input()))
+    bags.append(int(input()))
+bags.sort()
 
 res = 0
-for i in range(M):
-    bag = -heapq.heappop(bags)
-    for j in range(N):
-        gem = heapq.heappop(gems)
-        if bag >= gem[1]:
-            res += gem[2]
+temp = []
+for bag in bags:
+    for i in range(N):
+        if gems:
+            gem = heapq.heappop(gems)
+            m, v = gem[0], gem[1]
+            if m <= bag:
+                heapq.heappush(temp, (-v, m))
+            else:
+                break
+        else:
             break
+
+    if temp:
+        res -= heapq.heappop(temp)[0]
 
 print(res)
