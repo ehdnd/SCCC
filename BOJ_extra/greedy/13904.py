@@ -6,20 +6,19 @@ N = int(input())
 tasks = []
 for _ in range(N):
     d, w = map(int, input().split())
-    heapq.heappush(tasks, (-d, -w))
+    tasks.append((d, w))
+tasks.sort(reverse=True, key=lambda x: (x[0], x[1]))
 
+date = tasks[0][0]
+idx = 0
 res = 0
-date = -tasks[0][0]
 temp = []
-while tasks and date > 0:
-    for task in tasks:
-        if -task[0] >= date:
-            d, w = heapq.heappop(tasks)
-            heapq.heappush(temp, (w, d))
-        else:
-            break
+while date > 0:
+    while idx < N and tasks[idx][0] >= date:
+        heapq.heappush(temp, -tasks[idx][1])
+        idx += 1
     if temp:
-        res -= heapq.heappop(temp)[0]
+        res -= heapq.heappop(temp)
     date -= 1
 
 print(res)
