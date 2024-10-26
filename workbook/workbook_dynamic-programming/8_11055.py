@@ -4,13 +4,12 @@ input = lambda: sys.stdin.readline().rstrip()
 
 
 def jud(N, nums):
-    dp = [[nums[i], nums[i]] for i in range(N)]
+    dp = [nums[i] for i in range(N)]
     for i in range(N):
-        now = dp[i][1]
         for j in range(i):
-            if dp[i][0] > dp[j][0]:
-                dp[i][1] = max(now + dp[j][1], now)
-    return max(dp, key=lambda x: x[1])[1]
+            if nums[i] > nums[j]:
+                dp[i] = max(dp[i], nums[i] + dp[j])
+    return max(dp)
 
 
 N = int(input())
