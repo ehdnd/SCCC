@@ -30,7 +30,6 @@ def jud(L1, L2):
     else:
         if ccw_123 * ccw_124 < 0 and ccw_341 * ccw_342 < 0:
             return 1
-
     return 0
 
 
