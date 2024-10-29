@@ -4,31 +4,25 @@ from collections import deque
 input = lambda: sys.stdin.readline().rstrip()
 
 
-def jud(nums):
-    cnt = 1
+def jud(deq):
     res = []
-    deq = deque()
+    K = deq.popleft()
+    res.append(K[0])
 
-    for num in nums:
-        while 1:
-            if not deq or deq[-1] < num:
-                deq.append(cnt)
-                cnt += 1
-                res.append("+")
-            elif deq[-1] == num:
-                deq.pop()
-                res.append("-")
-                break
-            else:
-                return "NO"
+    while deq:
+        if K[1] >= 0:
+            for _ in range(K[1] - 1):
+                deq.append(deq.popleft())
+            K = deq.popleft()
+        else:
+            for _ in range(abs(K[1]) - 1):
+                deq.appendleft(deq.pop())
+            K = deq.pop()
+        res.append(K[0])
+
     return res
 
 
 N = int(input())
-nums = [int(input()) for _ in range(N)]
-
-res = jud(nums)
-if res == "NO":
-    print("NO")
-else:
-    print(*res, sep="\n")
+deq = deque(enumerate(list(map(int, input().split()))))
+print(*[x + 1 for x in jud(deq)])
