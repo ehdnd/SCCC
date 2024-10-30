@@ -4,26 +4,19 @@ from collections import deque
 input = lambda: sys.stdin.readline().rstrip()
 
 
-def jud(arr):
-    res = []
+def jud(N, arr):
+    res = deque()
     deq = deque()
-    for num in arr:
-        while 1:
-            if not deq:
-                res.append(-1)
-                deq.append(num)
-                break
+    for i in range(N, 0, -1):
+        num = arr[i - 1]
+        while deq and deq[-1] <= num:
+            deq.pop()
+        res.appendleft(deq[-1] if deq else -1)
+        deq.append(num)
 
-            if deq[-1] > num:
-                res.append(deq[-1])
-                deq.append(num)
-                break
-            else:
-                deq.pop()
-
-    return res[::-1]
+    return res
 
 
 N = int(input())
-arr = list(map(int, input().split()))[::-1]
-print(*jud(arr))
+arr = list(map(int, input().split()))
+print(*jud(N, arr))
