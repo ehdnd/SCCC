@@ -3,30 +3,31 @@ import sys
 input = lambda: sys.stdin.readline().rstrip()
 
 
-def jud(str):
-    cnt1 = 0
-    cnt2 = 0
-    for char in str:
+def jud(arr):
+    stack = []
+    for char in arr:
         if char == "(":
-            cnt1 += 1
+            stack.append("(")
         elif char == ")":
-            cnt1 -= 1
+            if stack and stack[-1] == "(":
+                stack.pop()
+            else:
+                return "no"
         elif char == "[":
-            cnt2 += 1
+            stack.append("[")
         elif char == "]":
-            cnt2 -= 1
+            if stack and stack[-1] == "[":
+                stack.pop()
+            else:
+                return "no"
+        else:
+            continue
 
-        if cnt1 < 0 or cnt2 < 0:
-            return "no"
-
-    if cnt1 == 0 and cnt2 == 0:
-        return "yes"
-    else:
-        return "no"
+    return "no" if stack else "yes"
 
 
 while 1:
-    string = input()
-    if string == ".":
+    arr = input()
+    if arr == ".":
         break
-    print(jud(string))
+    print(jud(arr))
