@@ -13,6 +13,9 @@ def dfs(v):
         res = 1
 
     for nv in G[v]:
+        if nv == cut and len(G[v]) == 1:
+            res = 1
+            continue
         res += dfs(nv)
     return res
 
