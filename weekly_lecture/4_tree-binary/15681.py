@@ -6,12 +6,11 @@ input = lambda: sys.stdin.readline().rstrip()
 
 # Siz v에 속한 정점의 개수를 저장하자
 def dfs(v, b):
-    res = 1
+    Siz[v] = 1
     for nx in G[v]:
         if nx != b:
-            res += dfs(nx, v)
-    Siz[v] = res
-    return res
+            dfs(nx, v)
+        Siz[v] += Siz[nx]
 
 
 N, R, Q = map(int, input().split())
