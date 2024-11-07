@@ -16,12 +16,12 @@ def bfs():
 
         for i in range(1, 7):
             nv = v + i
-            if nv > 100 or V[nv] >= V[v]:
+            if nv > 100 or V[nv]:
                 continue
-            V[nv] = V[v] + 1
-
             if L[nv]:
                 nv = L[nv]
+                if V[nv]:
+                    continue
             q.append(nv)
             V[nv] = V[v] + 1
 
@@ -32,5 +32,4 @@ L = [0] * 101
 for _ in range(N + M):
     x, y = map(int, input().split())
     L[x] = y
-
 print(bfs())
