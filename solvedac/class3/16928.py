@@ -16,7 +16,7 @@ def bfs():
 
         for i in range(1, 7):
             nv = v + i
-            if nv > 100 or V[nv]:
+            if nv > 100 or V[nv] >= V[v]:
                 continue
             V[nv] = V[v] + 1
 
