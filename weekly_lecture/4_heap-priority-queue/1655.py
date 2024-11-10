@@ -22,10 +22,10 @@ def move(left, mid, right):
 def jud():
     left = []
     right = []
-    mid = None
+    mid = -10101
     for _ in range(N):
         M = int(input())
-        if not mid:
+        if mid == -10101:
             mid = M
         elif M < mid:
             heapq.heappush(left, -M)
