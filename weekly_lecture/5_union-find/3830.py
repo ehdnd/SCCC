@@ -14,13 +14,12 @@ def Find(a):
 
 
 def Union(a, b, w):
-    aw, bw = L[a], L[b]
-    a, b = Find(a), Find(b)
-    if a == b:
+    ra, rb = Find(a), Find(b)
+    if ra == rb:
         return False
-    S[a] += S[b]
-    S[b] = a
-    L[b] = w + aw - bw
+    S[ra] += S[rb]
+    S[rb] = ra
+    L[rb] = w + L[a] - L[b]
     return True
 
 
@@ -41,13 +40,3 @@ while 1:
                 print(L[b] - L[a])
             else:
                 print("UNKNOWN")
-
-
-# def Union(a, b, w):
-#     return
-
-
-# S = [-1, -1, 1, 2, 3, 4, 5, 6]
-# L = [0, 0, 100, 100, -150, -10, 50, 50]
-# Find(3)
-# print(S, L)
