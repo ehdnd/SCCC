@@ -7,15 +7,13 @@ input = lambda: sys.stdin.readline().rstrip()
 def Find(a):
     if S[a] < 0:
         return a
-    S[a] = Find(S[a])
+    p = Find(S[a])
     L[a] += L[S[a]]
+    S[a] = p
     return S[a]
 
 
 def Union(a, b, w):
-    if a > b:
-        a, b = b, a
-        w = -w
     aw, bw = L[a], L[b]
     a, b = Find(a), Find(b)
     if a == b:
@@ -43,3 +41,13 @@ while 1:
                 print(L[b] - L[a])
             else:
                 print("UNKNOWN")
+
+
+# def Union(a, b, w):
+#     return
+
+
+# S = [-1, -1, 1, 2, 3, 4, 5, 6]
+# L = [0, 0, 100, 100, -150, -10, 50, 50]
+# Find(3)
+# print(S, L)
