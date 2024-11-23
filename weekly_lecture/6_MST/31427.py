@@ -26,11 +26,12 @@ N, M, Q = map(int, input().split())
 G = [list(input().split()) for _ in range(M)]
 School = ["A", "B", "C", "D", "E"]
 
-Cases = [c for c in permutations([1, 2, 3, 4, 5])]
+Cases = [c for c in permutations(["A", "B", "C", "D", "E"])]
 Res_cases = {}
 
 for case in Cases:
-    school_to_w = dict(zip(School, case))
+    school_to_w = dict(zip(case, [1, 2, 3, 4, 5]))
+
     G.sort(key=lambda x: school_to_w[x[-1]])
     S = [-1] * (N + 1)
     res = dict(zip(School, [0, 0, 0, 0, 0]))
@@ -44,11 +45,9 @@ for case in Cases:
 
 for _ in range(Q):
     query = list(map(int, input().split()))
-    q = list(zip(query, [1, 2, 3, 4, 5]))
+    q = list(zip(query, School))
     q.sort()
-    qq = list(enumerate(q))
-    qq.sort(key=lambda x: x[1][1])
-    query_key = tuple([qq[i][0] + 1 for i in range(5)])
+    query_key = tuple([q[i][1] for i in range(5)])
     final_case = Res_cases[query_key]
 
     res = 0
@@ -56,3 +55,6 @@ for _ in range(Q):
     for i in range(5):
         res += query[i] * final_case[school[i]]
     print(res)
+
+# [2, 3, 5, 4, 1] 은 [2인 B의 가중치가 인덱스만큼이라는 뜻]
+# [1, 2, 3, 5, 4] Cases 중 하나..
