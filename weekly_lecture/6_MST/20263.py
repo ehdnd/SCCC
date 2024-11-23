@@ -31,6 +31,18 @@ def mst(S, mid):
     return 0
 
 
+def find_used_lines():
+    used_lines = []
+    uS = [-1] * 10101
+    for a, b, w in G:
+        if w < L:
+            continue
+        if Union(uS, a, b):
+            used_lines.append([a, b, w])
+        if -uS[Find(uS, a)] == N:
+            return used_lines
+
+
 def binary_search(left, right):
     while 1:
         if right < left:
@@ -47,15 +59,22 @@ def binary_search(left, right):
 N, M = map(int, input().split())
 G = [list(map(int, input().split())) for _ in range(M)]
 
-left = 10 * 8
-right = -1
-for _, __, w in G:
-    left = min(left, w)
-    right = max(left, w)
+G.sort(key=lambda x: x[-1])
+
+left = min(G, key=lambda x: x[-1])[-1]
+right = max(G, key=lambda x: x[-1])[-1]
 
 L = binary_search(left, right)
 
 FS = [-1] * 10101
-print(L)
 mst(FS, L)
-print(FS[1 : N + 1])
+Lines = find_used_lines()[::-1]
+
+S = [-1] * 10101
+res = 0
+for a, b, w in Lines:
+    size_a = -S[Find(S, a)]
+    size_b = -S[Find(S, b)]
+    res += size_a * size_b * w
+    Union(S, a, b)
+print(res)
