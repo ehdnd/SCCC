@@ -28,19 +28,14 @@ def jud():
 
     # 벽 - 벽
     heapq.heappush(Lines, [W, 0, N + 1])
+
     # 벽1 / 벽2 - 원
     for i in range(1, N + 1):
         x, y, r = Sensors[i]
         w1 = x - r
         w2 = W - x - r
-        if w1 > 0:
-            heapq.heappush(Lines, [w1, 0, i])
-        else:
-            Union(0, i)
-        if w2 > 0:
-            heapq.heappush(Lines, [w2, i, N + 1])
-        else:
-            Union(i, N + 1)
+        heapq.heappush(Lines, [w1, 0, i]) if w1 > 0 else Union(0, i)
+        heapq.heappush(Lines, [w2, i, N + 1]) if w2 > 0 else Union(i, N + 1)
 
     # 원 - 원
     for i in range(1, N + 1):
@@ -50,10 +45,7 @@ def jud():
                 continue
             x2, y2, r2 = Sensors[j]
             w = sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2) - r1 - r2
-            if w > 0:
-                heapq.heappush(Lines, [w, i, j])
-            else:
-                Union(i, j)
+            heapq.heappush(Lines, [w, i, j]) if w > 0 else Union(i, j)
 
     if Find(0) == Find(N + 1):
         return 0
@@ -62,13 +54,12 @@ def jud():
     res = 0
     while Lines:
         w, a, b = heapq.heappop(Lines)
-        # for w, a, b in Lines:
         if Union(a, b):
             res = w
         if Find(0) == Find(N + 1):
             break
 
-    return w / 2 if w != 0 else 0
+    return w / 2
 
 
 T = int(input())
