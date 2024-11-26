@@ -25,5 +25,21 @@
       "def jud():",
       "    return"
     ]
+  },
+  "cpp settings": {
+    "scope": "cpp",
+    "prefix": "!cpp",
+    "body": [
+      "#include <bits/stdc++.h>",
+      "#define all(v) v.begin(), v.end()",
+      "",
+      "using namespace std;",
+      "using ll = long long;",
+      "using p = pair<ll, ll>;",
+      "",
+      "int main() {",
+      "  cin.tie(0)->sync_with_stdio(0);",
+      "}"
+    ]
   }
 }
