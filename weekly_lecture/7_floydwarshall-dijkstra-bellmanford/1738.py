@@ -4,33 +4,21 @@ from collections import deque
 input = lambda: sys.stdin.readline().rstrip()
 inf = int(1e9)
 
-# 문제1)
-# 음의 사이클이 존재하는지..
-# 근데 이 사이클이 목적지까지 도달하는데 영향이 없다면?
 
-# 문제2)
-# 경로 역추적은 어떻게 진행할 것인가?
-# prev 배열을 선언해서 가중치 업데이트 될 떄마다 갱신하자
+def bfs(cycle):
+    q = deque(cycle)
+    V = [0] * 101
+    for node in cycle:
+        V[node] = 1
 
-# 엥?
-# 그럼 prev 배열로 bfs 는 어디서 사용하던것인지?
-
-
-def bfs(st):
-    q = deque()
-    q.append(st)
-    V[st] = 1
     while q:
         x = q.popleft()
         for nx, _ in G[x]:
-            if nx == N:
-                return True
-            if V[nx] == 1:
-                continue
-            q.append(nx)
-            V[nx] = 1
+            if not V[nx]:
+                V[nx] = 1
+                q.append(nx)
 
-    return False
+    return V[N]
 
 
 def res_print():
@@ -64,16 +52,11 @@ for i in range(N):
                 dist[nx] = dist[x] + w
                 prev[nx] = x
                 if i == N - 1:
-                    cycle.append(x)
+                    cycle.append(nx)
 
-if cycle:
-    for v in cycle:
-        V = [0] * (101)
-        if bfs(v):
-            print(-1)
-            break
-    else:
-        res_print()
+
+if cycle and bfs(cycle):
+    print(-1)
 elif dist[N] == inf:
     print(-1)
 else:
