@@ -16,36 +16,45 @@ inf = int(1e9)
 # 그럼 prev 배열로 bfs 는 어디서 사용하던것인지?
 
 
-def bfs():
+def bfs(st):
     q = deque()
-    q.append(N)
-    prev.append(N)
-    V[N] = 1
-
+    q.append(st)
+    V[st] = 1
     while q:
         x = q.popleft()
-        for st in range(1, N + 1):
-            for nx, w in G[st]:
-                if dist[nx] == dist[x] - w:
-                    prev.append(nx)
-                    q.append(nx)
-                    V[nx] = 1
+        for nx, _ in G[x]:
+            if nx == N:
+                return True
+            if V[nx] == 1:
+                continue
+            q.append(nx)
+            V[nx] = 1
 
-    return
+    return False
+
+
+def res_print():
+    now = N
+    res = []
+    while now != 1:
+        res.append(now)
+        now = prev[now]
+    res.append(1)
+    print(*res[::-1])
 
 
 N, M = map(int, input().split())
 G = [[] for _ in range(101)]
-V = [-1] * 101
 dist = [inf] * (101)
 dist[1] = 0
+prev = [0] * 101
+cycle = []
 
 # 최대 금품을 원하므로 -w 하고 벨만포드
 for _ in range(M):
     st, ed, w = map(int, input().split())
     G[st].append([ed, -w])
 
-isCycle = False
 for i in range(N):
     for x in range(1, N + 1):
         if dist[x] == inf:
@@ -53,11 +62,19 @@ for i in range(N):
         for nx, w in G[x]:
             if dist[nx] > dist[x] + w:
                 dist[nx] = dist[x] + w
+                prev[nx] = x
                 if i == N - 1:
-                    isCycle = True
+                    cycle.append(x)
 
-if isCycle or dist[N] == inf:
+if cycle:
+    for v in cycle:
+        V = [0] * (101)
+        if bfs(v):
+            print(-1)
+            break
+    else:
+        res_print()
+elif dist[N] == inf:
     print(-1)
 else:
-    bfs()
-    print(*prev[::-1])
+    res_print()
