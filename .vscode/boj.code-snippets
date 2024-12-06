@@ -22,11 +22,17 @@
       "import sys",
       "",
       "input = lambda: sys.stdin.readline().rstrip()",
-      "MAX = 101010",
+      "MIS = lambda: map(int, input().split())",
+      "II = lambda: int(input())",
       "",
       "",
-      "def jud():",
-      "    return"
+      "def solve() -> None:",
+      "    return",
+      "",
+      "",
+      "if __name__ == '__main__':",
+      "    solve()",
+      ""
     ]
   },
   "cpp settings": {
