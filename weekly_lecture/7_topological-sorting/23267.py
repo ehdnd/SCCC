@@ -30,21 +30,11 @@ def dijkstra() -> list:
 def bfs(dist: list) -> tuple[list, list]:
     dag = [[] for _ in range(N + 1)]
     indegree = [0] * (N + 1)
-    V = [0] * (N + 1)
-    q = deque()
-    q.append(N)
-    V[N] = 1
-
-    while q:
-        x = q.popleft()
-        for px, w in R[x]:
-            if dist[x] == dist[px] + w:
-                if x not in dag[px]:
-                    dag[px].append(x)
-                    indegree[x] += 1
-                if not V[px]:
-                    V[px] = 1
-                    q.append(px)
+    for x in range(1, N + 1):
+        for nx, w in G[x]:
+            if dist[nx] == dist[x] + w:
+                dag[x].append(nx)
+                indegree[nx] += 1
 
     return (dag, indegree)
 
