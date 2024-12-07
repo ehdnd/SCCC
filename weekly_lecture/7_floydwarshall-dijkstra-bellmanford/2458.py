@@ -19,10 +19,7 @@ def floyd_warshall(N: int, M: int) -> list:
     for x in range(1, N + 1):
         for st in range(1, N + 1):
             for ed in range(1, N + 1):
-                if dist[st][ed] == 1:
-                    continue
-                if dist[st][x] == dist[x][ed] == 1:
-                    dist[st][ed] = 1
+                dist[st][ed] = min(dist[st][ed], dist[st][x] + dist[x][ed])
     return dist
 
 
@@ -33,10 +30,14 @@ def solve() -> None:
     for i in range(1, N + 1):
         b_cnt, s_cnt = 0, 0
         for j in range(1, N + 1):
-            if dist[i][j] == 1:
+            if i == j:
+                continue
+
+            if dist[i][j] != INF:
                 b_cnt += 1
-            if dist[j][i] == 1:
+            if dist[j][i] != INF:
                 s_cnt += 1
+
         if b_cnt + s_cnt == N - 1:
             res += 1
 
