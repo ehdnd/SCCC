@@ -13,29 +13,19 @@ def folyd_warshall(N: int, M: int) -> list:
     for i in range(N + 1):
         dist[i][i] = 0
 
-    for st in range(N + 1):
-        for ed in range(N + 1):
-            table[st][ed] = ed
-
     for _ in range(M):
         a, b, w = MIS()
-        if dist[a][b] > w:
-            dist[a][b] = w
-            table[a][b] = b
-        if dist[b][a] > w:
-            dist[b][a] = w
-            table[b][a] = a
+        dist[a][b] = min(dist[a][b], w)
+        dist[b][a] = min(dist[b][a], w)
+        table[a][b] = b
+        table[b][a] = a
 
     for x in range(1, N + 1):
         for st in range(1, N + 1):
             for ed in range(1, N + 1):
                 if dist[st][ed] > dist[st][x] + dist[x][ed]:
                     dist[st][ed] = dist[st][x] + dist[x][ed]
-
-                    now = table[st][x]
-                    while table[st][now] != now:
-                        now = table[st][now]
-                    table[st][ed] = now
+                    table[st][ed] = table[st][x]
 
     return table
 
