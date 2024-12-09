@@ -19,18 +19,21 @@
     "scope": "python",
     "prefix": "!input",
     "body": [
-      "import sys",
+      "import sys ${1:",
+      "from collections import deque}",
       "",
       "input = lambda: sys.stdin.readline().rstrip()",
       "MIS = lambda: map(int, input().split())",
       "II = lambda: int(input())",
+      "${2:INF = int(1e9)}",
       "",
       "",
       "def solve() -> None:",
+      "    $0",
       "    return",
       "",
       "",
-      "if __name__ == '__main__':",
+      "if __name__ == \"__main__\":",
       "    solve()",
       ""
     ]
