@@ -24,8 +24,8 @@
       "",
       "input = lambda: sys.stdin.readline().rstrip()",
       "MIS = lambda: map(int, input().split())",
-      "II = lambda: int(input())",
-      "${2:INF = int(1e9)}",
+      "II = lambda: int(input()) ${2:",
+      "INF = int(1e9)}",
       "",
       "",
       "def solve() -> None:",
@@ -51,7 +51,7 @@
       "",
       "int main() {",
       "  cin.tie(0)->sync_with_stdio(0);",
-      "return",
+      "  return",
       "}"
     ]
   }
