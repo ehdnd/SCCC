@@ -42,16 +42,25 @@
     "scope": "cpp",
     "prefix": "!cpp",
     "body": [
-      "#include <bits/stdc++.h>",
-      "#define all(v) v.begin(), v.end()",
+      "#include <bits/stdc++.h> ${1:",
+      "#define all(v) v.begin(), v.end()}",
       "",
       "using namespace std;",
       "using ll = long long;",
       "using p = pair<ll, ll>;",
       "",
+      "$3",
+      "",
+      "void Solve() {",
+      "  $0",
+      "}",
+      "",
       "int main() {",
       "  cin.tie(0)->sync_with_stdio(0);",
-      "  return",
+      "  ${2:int T;",
+      "  cin >> T;",
+      "  while (T--) }Solve();",
+      "  return 0;",
       "}"
     ]
   }
