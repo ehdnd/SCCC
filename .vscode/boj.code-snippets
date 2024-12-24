@@ -44,7 +44,6 @@
     "body": [
       "#include <bits/stdc++.h> ${1:",
       "#define all(v) v.begin(), v.end()}",
-      "",
       "using namespace std;",
       "using ll = long long;",
       "using p = pair<ll, ll>;",
