@@ -6,8 +6,8 @@ struct Point {
 };
 
 int N;
-int S[3030];
-Point points[3030];
+vector<int> S;
+vector<Point> points;
 
 int Find(int a) {
   if (S[a] < 0) return a;
@@ -34,14 +34,11 @@ bool isConnected(int a, int b) {
 
 void Solve() {
   cin >> N;
-  memset(S, -1, sizeof(S));
-  //   memset(points, 0, sizeof(points));
 
-  for (int i = 0; i < N; i++) {
-    Point temp;
-    cin >> temp.x >> temp.y >> temp.r;
-    points[i] = temp;
-  }
+  S.assign(N, -1);
+  points.resize(N);
+
+  for (auto& [x, y, r] : points) cin >> x >> y >> r;
 
   for (int i = 0; i < N; i++)
     for (int j = i + 1; j < N; j++)
