@@ -9,21 +9,15 @@ int idg[1010];
 int strahlers[1010][2];
 vector<int> graph[1010];
 
-void Solve() {
-  cin >> K >> M >> P;
-
+void Initialize() {
   memset(idg, 0, sizeof(idg));
-  memset(graph, 0, sizeof(graph));
   memset(strahlers, 0, sizeof(strahlers));
+  for (int i = 1; i <= M; i++) graph[i].clear();
+}
 
-  for (int i = 0; i < P; i++) {
-    int st, ed;
-    cin >> st >> ed;
-    graph[st].push_back(ed);
-    idg[ed]++;
-  }
-
+void TopologicalSorting() {
   queue<int> Q;
+
   for (int i = 1; i <= M; i++) {
     if (!idg[i]) {
       Q.push(i);
@@ -42,18 +36,27 @@ void Solve() {
       if (next_max < curr_max) {
         next_max = curr_max;
         next_cnt = 1;
-      } else if (next_max == curr_max) {
-        if (next_cnt == -1)
-          next_cnt = 1;
-        else if (++next_cnt >= 2) {
-          next_max++;
-          next_cnt = -1;
-        };
-      }
+      } else if (next_max == curr_max)
+        if (++next_cnt == 2) next_max++;
 
       if (!--idg[nx]) Q.push(nx);
     }
   }
+}
+
+void Solve() {
+  cin >> K >> M >> P;
+  Initialize();
+
+  for (int i = 0; i < P; i++) {
+    int st, ed;
+    cin >> st >> ed;
+    graph[st].push_back(ed);
+    idg[ed]++;
+  }
+
+  TopologicalSorting();
+
   cout << K << " " << strahlers[M][0] << "\n";
 }
 
