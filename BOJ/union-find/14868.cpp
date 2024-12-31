@@ -1,5 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
+using pii = pair<int, int>;
 
 int N, K;
 int S[101010];
@@ -35,33 +36,37 @@ void CheckAndUnion(int x, int y) {
 }
 
 int Bfs() {
-  queue<tuple<int, int, int>> Q;
+  queue<pii> q;
 
   for (int i = 1; i <= K; i++) {
     int a, b;
     cin >> a >> b;
     V[a][b] = i;
+    q.emplace(a, b);
 
     CheckAndUnion(a, b);
     if (-S[Find(V[a][b])] == K) return 0;
-
-    Q.emplace(a, b, 1);
   }
 
-  while (!Q.empty()) {
-    auto [x, y, cnt] = Q.front();
-    Q.pop();
+  int cnt = 0;
+  while (!q.empty()) {
+    int q_size = q.size();
+    cnt++;
 
-    for (int i = 0; i < 4; i++) {
-      int nx = x + dx[i];
-      int ny = y + dy[i];
-      if (!CheckBound(nx, ny)) continue;
+    while (q_size--) {
+      auto [x, y] = q.front();
+      q.pop();
 
-      if (!V[nx][ny]) {
+      for (int i = 0; i < 4; i++) {
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        if (!CheckBound(nx, ny) || V[nx][ny]) continue;
+
         V[nx][ny] = V[x][y];
-        Q.emplace(nx, ny, cnt + 1);
+        q.emplace(nx, ny);
+
+        CheckAndUnion(nx, ny);
       }
-      CheckAndUnion(nx, ny);  // 아 진짜 로 !...............
       if (-S[Find(V[x][y])] == K) return cnt;
     }
   }
