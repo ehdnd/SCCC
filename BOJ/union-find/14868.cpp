@@ -51,7 +51,7 @@ int Bfs() {
   while (!Q.empty()) {
     auto [x, y, cnt] = Q.front();
     Q.pop();
-    cout << x << " " << y << " " << cnt << "\n";
+
     for (int i = 0; i < 4; i++) {
       int nx = x + dx[i];
       int ny = y + dy[i];
@@ -61,7 +61,7 @@ int Bfs() {
         V[nx][ny] = V[x][y];
         Q.emplace(nx, ny, cnt + 1);
       }
-      CheckAndUnion(x, y);
+      CheckAndUnion(nx, ny);  // 아 진짜 로 !...............
       if (-S[Find(V[x][y])] == K) return cnt;
     }
   }
