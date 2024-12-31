@@ -18,41 +18,40 @@ bool Union(int a, int b) {
   b = Find(b);
   if (a == b) return false;
   if (S[a] > S[b]) swap(a, b);
-  cout << "연결 " << a << " " << b << "\n";
   S[a] += S[b];
   S[b] = a;
   return true;
 }
 
-bool CheckBound(int a, int b) { return (1 <= a <= N && 1 <= b <= N); }
+bool CheckBound(int a, int b) { return (1 <= a && a <= N && 1 <= b && b <= N); }
 
-bool CheckConnected(int a, int b) {
+void CheckAndUnion(int x, int y) {
   for (int i = 0; i < 4; i++) {
-    int nx = a + dx[i];
-    int ny = b + dy[i];
-    if (!CheckBound(nx, ny)) continue;
-    if (V[nx][ny] && V[nx][ny] != V[a][b]) return true;
+    int nx = x + dx[i];
+    int ny = y + dy[i];
+    if (!CheckBound(nx, ny) || !V[nx][ny]) continue;
+    Union(V[x][y], V[nx][ny]);
   }
-  return false;
 }
 
-void Solve() {
-  cin >> N >> K;
-
-  memset(S, -1, sizeof(S));
+int Bfs() {
   queue<tuple<int, int, int>> Q;
 
   for (int i = 1; i <= K; i++) {
     int a, b;
     cin >> a >> b;
     V[a][b] = i;
-    Q.emplace(a, b, 0);
+
+    CheckAndUnion(a, b);
+    if (-S[Find(V[a][b])] == K) return 0;
+
+    Q.emplace(a, b, 1);
   }
 
   while (!Q.empty()) {
     auto [x, y, cnt] = Q.front();
     Q.pop();
-
+    cout << x << " " << y << " " << cnt << "\n";
     for (int i = 0; i < 4; i++) {
       int nx = x + dx[i];
       int ny = y + dy[i];
@@ -60,27 +59,19 @@ void Solve() {
 
       if (!V[nx][ny]) {
         V[nx][ny] = V[x][y];
-
-        if (CheckConnected(nx, ny)) {
-          Union(V[nx][ny], V[x][y]);
-          if (-S[Find(V[x][y])] == K) {
-            cout << cnt;
-            return;
-          }
-        }
         Q.emplace(nx, ny, cnt + 1);
-        continue;
       }
-
-      if (V[nx][ny] == V[x][y]) continue;
-
-      Union(V[nx][ny], V[x][y]);
-      if (-S[Find(V[x][y])] == K) {
-        cout << cnt;
-        return;
-      }
+      CheckAndUnion(x, y);
+      if (-S[Find(V[x][y])] == K) return cnt;
     }
   }
+  return -1;
+}
+
+void Solve() {
+  cin >> N >> K;
+  memset(S, -1, sizeof(S));
+  cout << Bfs();
 }
 
 int main() {
