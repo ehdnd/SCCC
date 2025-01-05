@@ -46,7 +46,7 @@
       "#define all(v) v.begin(), v.end()}",
       "using namespace std;",
       "using ll = long long;",
-      "using p = pair<ll, ll>;",
+      "using pii = pair<int, int>;",
       "",
       "$3",
       "",
