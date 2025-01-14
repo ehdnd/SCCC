@@ -1,89 +1,48 @@
 #include <bits/stdc++.h>
-#define all(v) v.begin(), v.end()
 using namespace std;
 
-vector<string> S;
+// 차량기지 알고리즘
 
-string Modify(vector<string>& stk) {
-  string c = stk.back();
-  stk.pop_back();
-  string op = stk.back();
-  stk.pop_back();
-  string a = stk.back();
-  stk.pop_back();
+string S, ans;
+vector<char> stk;
 
-  return a + c + op;
+int GetPrecedence(char op) {
+  if (op == '*' || op == '/') return 2;
+  if (op == '+' || op == '-') return 1;
+  return 0;
 }
 
 void Solve() {
-  string input;
-  cin >> input;
-  for (char c : input) S.push_back(string(1, c));
+  cin >> S;
 
-  while (1) {
-    bool isPar = false, isMul = false, isPlus = false;
+  for (char c : S) {
+    if (isupper(c)) {
+      ans += c;
 
-    for (string s : S) {
-      if (s == "(")
-        isPar = true;
-      else if (s == "*" || s == "/")
-        isMul = true;
-      else if (s == "+" || s == "-")
-        isPlus = true;
-    }
+    } else if (c == '(') {
+      stk.push_back(c);
 
-    if (!isPar && !isMul && !isPlus) break;
-
-    vector<string> stk;
-
-    if (isPar) {
-      bool isModi = false;
-      for (string s : S) {
-        stk.push_back(s);
-
-        if (!isModi && s == ")") {
-          isModi = true;
-          stk.pop_back();
-          string m = Modify(stk);
-          stk.pop_back();
-          stk.push_back(m);
-        }
+    } else if (c == ')') {
+      while (stk.back() != '(') {
+        ans += stk.back();
+        stk.pop_back();
       }
-      swap(stk, S);
+      stk.pop_back();
 
-    } else if (isMul) {
-      bool flag = false;
-      bool isModi = false;
-
-      for (string s : S) {
-        stk.push_back(s);
-
-        if (flag && !isModi) {
-          stk.push_back(Modify(stk));
-          isModi = true;
-        }
-        if (s == "*" || s == "/") flag = true;
+    } else {
+      while (!stk.empty() && GetPrecedence(stk.back()) >= GetPrecedence(c)) {
+        ans += stk.back();
+        stk.pop_back();
       }
-      swap(stk, S);
-
-    } else if (isPlus) {
-      bool flag = false;
-      bool isModi = false;
-
-      for (string s : S) {
-        stk.push_back(s);
-
-        if (flag && !isModi) {
-          isModi = true;
-          stk.push_back(Modify(stk));
-        }
-        if (s == "+" || s == "-") flag = true;
-      }
-      swap(stk, S);
+      stk.push_back(c);
     }
   }
+  while (!stk.empty()) {
+    ans += stk.back();
+    stk.pop_back();
+  }
 
-  for (string s : S) cout << s;
+  cout << ans;
 }
 
 int main() {
