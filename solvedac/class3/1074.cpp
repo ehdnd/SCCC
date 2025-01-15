@@ -1,27 +1,32 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int N, R, C, cnt;
+int N, R, C;
 
-void BT(int r, int c, int n) {
+void jud(int r, int c, int n, int curr) {
   if (n == 0) {
-    if (r == R && c == C) cout << cnt;
-    cnt++;
+    cout << curr;
     return;
   }
 
-  n--;
-  int dd = pow(2, n);
-  BT(r, c, n);
-  BT(r, c + dd, n);
-  BT(r + dd, c, n);
-  BT(r + dd, c + dd, n);
+  int std = pow(2, n - 1);
+  int plus = pow(2, (n - 1) * 2);
+
+  if (r >= std) {
+    curr += plus * 2;
+    r -= std;
+  }
+  if (c >= std) {
+    curr += plus;
+    c -= std;
+  }
+
+  jud(r, c, --n, curr);
 }
 
 void Solve() {
   cin >> N >> R >> C;
-
-  BT(0, 0, N);
+  jud(R, C, N, 0);
 }
 
 int main() {
