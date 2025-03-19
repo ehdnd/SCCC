@@ -3,6 +3,7 @@ using namespace std;
 using ll = long long;
 using pii = pair<int, int>;
 
+constexpr int X = 0;
 constexpr int S = 1;
 constexpr int T = 2;
 constexpr int O = 3;
@@ -38,7 +39,7 @@ void Solve() {
   for (int i = 0; i < N; ++i) {
     for (int j = 0; j < N; ++j) {
       char a;
-      int val = 0;
+      int val = X;
       cin >> a;
       if (a == 'S') {
         val = S;
@@ -68,11 +69,12 @@ void Solve() {
           for (int dir = 0; dir < 4; ++dir) {
             isCaught |= Observe(r, c, dir);
           }
+          if (isCaught) break;
+        }
 
-          if (!isCaught) {
-            cout << "YES";
-            return;
-          }
+        if (!isCaught) {
+          cout << "YES";
+          return;
         }
 
         PaintBoard(k, 0);
