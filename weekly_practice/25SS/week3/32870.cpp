@@ -23,8 +23,8 @@ void Solve() {
       continue;
     }
 
-    int max_a = 0;
-    int min_a = INF;
+    int max_a = nums[0] % q;
+    int min_a = nums[0] % q;
     int qm = q;
 
     for (int i = 2;; ++i) {
