@@ -20,7 +20,7 @@
     "prefix": "!input",
     "body": [
       "import sys ${1:",
-      "from collections import deque}",
+      "from collections import deque, defaultdict}",
       "",
       "input = lambda: sys.stdin.readline().rstrip()",
       "MIS = lambda: map(int, input().split())",
@@ -43,10 +43,12 @@
     "prefix": "!cpp",
     "body": [
       "#include <bits/stdc++.h> ${1:",
-      "#define all(v) v.begin(), v.end()}",
+      "#define all(v) v.begin(), v.end()",
+      "#define prs(v) sort(all(v)); v.erase(unique(all(v)), v.end())}",
       "using namespace std;",
       "using ll = long long;",
       "using pii = pair<int, int>;",
+      "using pll = pair<ll, ll>;",
       "",
       "$3",
       "",
